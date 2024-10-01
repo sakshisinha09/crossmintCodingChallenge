@@ -1,0 +1,214 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > APIs</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.example</a>
+</div>
+
+<h1>Coverage Summary for Class: APIs (org.example)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">APIs</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/50)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.example;
+&nbsp;
+&nbsp;import java.net.URI;
+&nbsp;import java.net.http.HttpClient;
+&nbsp;import java.net.http.HttpRequest;
+&nbsp;import java.net.http.HttpResponse;
+&nbsp;
+&nbsp;import static java.net.http.HttpRequest.newBuilder;
+&nbsp;
+<b class="nc">&nbsp;public class APIs {</b>
+<b class="nc">&nbsp;    final Config config = new Config();</b>
+<b class="nc">&nbsp;    final int waitTime = 10000;</b>
+<b class="nc">&nbsp;    int retryCount = 0;</b>
+<b class="nc">&nbsp;    final HttpClient client = HttpClient.newBuilder()</b>
+<b class="nc">&nbsp;            .followRedirects(HttpClient.Redirect.ALWAYS) // Enable follow redirects</b>
+<b class="nc">&nbsp;            .build();</b>
+&nbsp;    public void postPOLYanetAPICall(String body) throws Exception
+&nbsp;    {
+<b class="nc">&nbsp;        retryChecker(retryCount++);</b>
+&nbsp;
+<b class="nc">&nbsp;        HttpRequest request = newBuilder()</b>
+<b class="nc">&nbsp;                .uri(URI.create(&quot;https://challenge.crossmint.io/api/polyanets&quot;))</b>
+<b class="nc">&nbsp;                .header(&quot;Content-Type&quot;, &quot;application/json&quot;)</b>
+<b class="nc">&nbsp;                .POST(HttpRequest.BodyPublishers.ofString(body))</b>
+<b class="nc">&nbsp;                .build();</b>
+&nbsp;
+<b class="nc">&nbsp;        HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</b>
+&nbsp;
+<b class="nc">&nbsp;        if (response.statusCode() == 200) {</b>
+<b class="nc">&nbsp;            System.out.print(&quot;Poly: &quot; + response.statusCode() + &quot;\n&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            System.out.println(&quot;Poly API Error: &quot; + response.statusCode()  + &quot; &quot; + response.body() + &quot;\n&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void postSoloonAPICall(String body) throws Exception
+&nbsp;    {
+<b class="nc">&nbsp;        retryChecker(retryCount++);</b>
+&nbsp;
+<b class="nc">&nbsp;        HttpRequest request = newBuilder()</b>
+<b class="nc">&nbsp;                .uri(URI.create(&quot;https://challenge.crossmint.io/api/soloons&quot;))</b>
+<b class="nc">&nbsp;                .header(&quot;Content-Type&quot;, &quot;application/json&quot;)</b>
+<b class="nc">&nbsp;                .POST(HttpRequest.BodyPublishers.ofString(body))</b>
+<b class="nc">&nbsp;                .build();</b>
+&nbsp;
+<b class="nc">&nbsp;        HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</b>
+&nbsp;
+<b class="nc">&nbsp;        if (response.statusCode() == 200) {</b>
+<b class="nc">&nbsp;            System.out.print(&quot;Soloon: &quot; + response.statusCode() + &quot;\n&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            System.out.println(&quot;Soloon API Error: &quot; + response.statusCode()  + &quot; &quot; + response.body() + &quot;\n&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public HttpResponse&lt;String&gt; postGoalAPICall() throws Exception
+&nbsp;    {
+<b class="nc">&nbsp;        retryChecker(retryCount++);</b>
+&nbsp;
+<b class="nc">&nbsp;        HttpRequest request = newBuilder()</b>
+<b class="nc">&nbsp;                .uri(URI.create(&quot;https://challenge.crossmint.io/api/map/&quot; + config.getCandidateId() + &quot;/goal&quot;))</b>
+<b class="nc">&nbsp;                .header(&quot;Content-Type&quot;, &quot;application/json&quot;)</b>
+<b class="nc">&nbsp;                .GET()</b>
+<b class="nc">&nbsp;                .build();</b>
+&nbsp;
+<b class="nc">&nbsp;        return client.send(request, HttpResponse.BodyHandlers.ofString());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void postComethAPICall(String body) throws Exception
+&nbsp;    {
+<b class="nc">&nbsp;        retryChecker(retryCount++);</b>
+&nbsp;
+<b class="nc">&nbsp;        HttpRequest request = newBuilder()</b>
+<b class="nc">&nbsp;                .uri(URI.create(&quot;https://challenge.crossmint.io/api/comeths&quot;))</b>
+<b class="nc">&nbsp;                .header(&quot;Content-Type&quot;, &quot;application/json&quot;)</b>
+<b class="nc">&nbsp;                .POST(HttpRequest.BodyPublishers.ofString(body))</b>
+<b class="nc">&nbsp;                .build();</b>
+&nbsp;
+<b class="nc">&nbsp;        HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</b>
+&nbsp;
+<b class="nc">&nbsp;        if (response.statusCode() == 200) {</b>
+<b class="nc">&nbsp;            System.out.print(&quot;Cometh: &quot; + response.statusCode() + &quot;\n&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            System.out.println(&quot;Cometh API Error: &quot; + response.statusCode() + &quot; &quot; + response.body() + &quot;\n&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public String generatePOLYANETBody(int row, int column)
+&nbsp;    {
+<b class="nc">&nbsp;        return &quot;{\&quot;row\&quot;: \&quot;&quot; + row + &quot;\&quot;, \&quot;column\&quot;: \&quot;&quot; + column + &quot;\&quot;,\&quot;candidateId\&quot;:\&quot;&quot; + config.getCandidateId() + &quot;\&quot;}&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String generateSoloonBody(int row, int column, String color)
+&nbsp;    {
+<b class="nc">&nbsp;        return &quot;{\&quot;row\&quot;: \&quot;&quot; + row + &quot;\&quot;, \&quot;column\&quot;: \&quot;&quot; + column + &quot;\&quot;,\&quot;candidateId\&quot;:\&quot;&quot; + config.getCandidateId() + &quot;\&quot;,\&quot;color\&quot;: \&quot;&quot; + color + &quot;\&quot;}&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String generateComethBody(int row, int column, String direction)
+&nbsp;    {
+<b class="nc">&nbsp;        return &quot;{\&quot;row\&quot;: \&quot;&quot; + row + &quot;\&quot;, \&quot;column\&quot;: \&quot;&quot; + column + &quot;\&quot;,\&quot;candidateId\&quot;:\&quot;&quot; + config.getCandidateId() + &quot;\&quot;,\&quot;direction\&quot;: \&quot;&quot; + direction + &quot;\&quot;}&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    protected void retryChecker(int retryCount) throws Exception
+&nbsp;    {
+<b class="nc">&nbsp;        if(retryCount != 0 &amp;&amp; retryCount % 9 == 0)</b>
+&nbsp;        {
+<b class="nc">&nbsp;            Thread.sleep(waitTime);</b>
+<b class="nc">&nbsp;            System.out.print(retryCount + &quot;\n&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-09-30 19:45</div>
+</div>
+</body>
+</html>
